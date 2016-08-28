@@ -53,7 +53,7 @@ class ImageCrawler(scrapy.Spider):
             self.keyword = keyword.decode('gbk')
         else:
             self.keyword = keyword.decode('utf-8')
-        self.save_star = save_star
+        self.save_star = int(save_star)
         self.save_thumbs = save_thumbs == 'True'
 
     def start_requests(self):

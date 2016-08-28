@@ -84,11 +84,11 @@ ITEM_PIPELINES = {'pixiv_hot.pipelines.PixivItemPipeline': 20,
 COOKIES_ENABLED = True
 COOKIES_DEBUG = True
 
-IMAGES_STORE = 'path to the folder you want to save imgs'
+IMAGES_STORE = ''
 
-PIXIV_ID = 'your pixiv id'
+PIXIV_ID = ''
 
-PIXIV_PASS = 'your pixiv password'
+PIXIV_PASS = ''
 
 # The place you want to store text data
 DATABASE_POSITION = 'database/storage.db'

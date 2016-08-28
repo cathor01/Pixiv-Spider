@@ -19,7 +19,7 @@
 
 2. Run scrapy with params:
     
-    `scrapy crawl pixiv -a keyword=战舰少女 -a max_page=200 -a save_star=400 -a save_thumbs=False`
+    `scrapy crawl pixiv -a keyword=战舰少女 max_page=200 save_star=400 save_thumbs=False`
     
     ### Explain:
 

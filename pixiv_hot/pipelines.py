@@ -71,11 +71,11 @@ class PixivItemPipeline(object):
         # print '6666666666666666'
 
     def process_item(self, item, spider):
-        if isinstance(item, PixivItem):
+        if 'keyword' in item.fields:
             sql = u'insert into pixiv_item values(?, ?, ?, ?, ?, ?, ?)'
             self.conn.execute(sql, (
             item['id'], item['title'].encode('utf-8'), item['link'], item['star'], 1 if item['multi'] else 0,
-            item['keyword'], item['time'].strftime('%Y-%m-%d %H:%M:%S')))
+            item['keyword'].encode('utf-8'), item['time'].strftime('%Y-%m-%d %H:%M:%S')))
             self.conn.commit()
         return item
 
@@ -84,6 +84,7 @@ class PixivItemPipeline(object):
 
     def create_table(self):
         conn = sqlite3.connect(get_project_settings()['DATABASE_POSITION'])
+        conn.text_factory = str
         try:
             conn.execute(
                 """CREATE TABLE pixiv_item(

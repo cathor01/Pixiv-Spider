@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
+# coding= utf-8
 import json
 import re
 
 import datetime
 import scrapy
+import platform
 
 from pixiv_hot.items import PixivItem, BigImage
 
@@ -44,13 +45,16 @@ class ImageCrawler(scrapy.Spider):
     def __init__(self, keyword=u'战舰少女', max_page=0, save_star=500, save_thumbs=True, *args, **kwargs):
         super(ImageCrawler, self).__init__(*args, **kwargs)
         settings = get_project_settings()
-        # print keyword, max_page, save_star, save_thumbs
+        print keyword, max_page, save_star, save_thumbs == 'True'
         self.pixiv_id = settings['PIXIV_ID']
         self.pixiv_pass = settings['PIXIV_PASS']
-        self.max_page = max_page
-        self.keyword = keyword
+        self.max_page = int(max_page)
+        if platform.system() == 'Windows':
+            self.keyword = keyword.decode('gbk')
+        else:
+            self.keyword = keyword.decode('utf-8')
         self.save_star = save_star
-        self.save_thumbs = save_thumbs
+        self.save_thumbs = save_thumbs == 'True'
 
     def start_requests(self):
         request = scrapy.Request(
@@ -127,6 +131,7 @@ class ImageCrawler(scrapy.Spider):
             m = re.search(r'illust_id=(\d+)$', item['link'])
             item['id'] = m.group(1)
             # print item
+            # print self.save_thumbs
             if self.save_thumbs:
                 yield item
             # print 'keyword' in item.fields

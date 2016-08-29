@@ -91,7 +91,7 @@ class PixivItemPipeline(object):
                        id INTEGER PRIMARY KEY,
                        title TEXT, link TEXT,
                        star INTEGER, multi INTEGER,
-                       keyword TEXT, time TEXT)""")
+                       keyword TEXT, publish TIMESTAMP)""")
             conn.commit()
         except:
             pass

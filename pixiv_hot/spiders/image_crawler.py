@@ -45,16 +45,17 @@ class ImageCrawler(scrapy.Spider):
     def __init__(self, keyword=u'战舰少女', max_page=0, save_star=500, save_thumbs=True, *args, **kwargs):
         super(ImageCrawler, self).__init__(*args, **kwargs)
         settings = get_project_settings()
-        print keyword, max_page, save_star, save_thumbs == 'True'
+        
         self.pixiv_id = settings['PIXIV_ID']
         self.pixiv_pass = settings['PIXIV_PASS']
         self.max_page = int(max_page)
         if platform.system() == 'Windows':
-            self.keyword = keyword.decode('gbk')
+            self.keyword = keyword.decode('gbk').replace('##', ' ')
         else:
-            self.keyword = keyword.decode('utf-8')
+            self.keyword = keyword.decode('utf-8').replace('##', ' ')
         self.save_star = int(save_star)
-        self.save_thumbs = save_thumbs == 'True'
+        self.save_thumbs = save_thumbs == 'True' or save_thumbs == True
+        print self.keyword, self.max_page, self.save_star, self.save_thumbs
 
     def start_requests(self):
         request = scrapy.Request(

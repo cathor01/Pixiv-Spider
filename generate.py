@@ -130,6 +130,7 @@ html = u"""
                 .pixiv-item{
                     margin: 20px;
                     width: 200px;
+                    height: 300px;
                     float: left;
                     display: block;
                 }
@@ -139,31 +140,24 @@ html = u"""
                     font-family: "Microsoft YaHei", Monaco, "Courier New", Courier, monospace;
                 }
 
-
-                .pixiv-item img{
+                .image-outer img{
+                    max-width:200px;
                     width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    vertical-align: middle;
+                    object-fit: contain;
                 }
+
                 .outer{
                     position: relative;
                     max-width: 1600px;
-                }margin: 20px;
+                }
+
+                .image-outer{
                     width: 200px;
-                    float: left;
-                    display: block;
-                }
-
-                .pixiv-item p{
+                    height: 200px;
                     text-align: center;
-                    font-family: "Microsoft YaHei", Monaco, "Courier New", Courier, monospace;
-                }
-
-
-                .pixiv-item img{
-                    width: 100%;
-                }
-                .outer{
-                    position: relative;
-                    max-width: 1600px;
                 }
             </style>
         </head>
@@ -173,10 +167,12 @@ html = u"""
 for item in star_array:
     html += u"""
         <div class="pixiv-item">
-            <img src="thumbs/{0}.jpg">
-            <a href="{1}"><p>{2}</p></a>
+            <div class="image-outer">
+                <img src="thumbs/{0}.jpg">
+            </div>
+            <a target="blank" href="{1}"><p>{2}</p></a>
             <p>{3}</p>
-            <p>{4} like</p>
+            <p>{4} Star</p>
         </div>
     """.format(item['id'], item['link'], item['title'].encode('utf-8'), item['publish'], item['star'])
 html += u"""</div>

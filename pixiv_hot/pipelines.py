@@ -49,7 +49,7 @@ class PixivImagePipeline(ImagesPipeline):
         elif 'id' in item.fields:
             # print '12345555555555555555555555555'
             return [Request(x, meta={'cookiejar': self._cookie_key, 'big': '1',
-                                     'image_name': u'big/{0}-{1}_{2}'.format(item['star'], item['id'].encode('gbk'), item['page'])},
+                                     'image_name': u'{3}/{0}-{1}_{2}'.format(item['star'], item['id'].encode('gbk'), item['page'], item['img_save_dir'])},
                             headers={
                                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
                                 "Accept-Encoding": "gzip, deflate, sdch",

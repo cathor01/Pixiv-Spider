@@ -30,3 +30,4 @@ class BigImage(scrapy.Item):
     page = scrapy.Field()
     images = scrapy.Field()
     image_urls = scrapy.Field()
+    img_save_dir = scrapy.Field()

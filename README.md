@@ -21,7 +21,7 @@
 
 2. Run scrapy with params:
     
-    `scrapy crawl pixiv -a keyword=战舰少女 -a max_page=200 -a save_star=400 -a save_thumbs=False`
+    `scrapy crawl pixiv -a keyword=战舰少女 -a max_page=200 -a save_star=400 -a save_thumbs=False -a save_dir=kenR`
     
     ### Explain:
 
@@ -29,8 +29,9 @@
     * max_page: how many pages the spider will crwal
     * save_star: image with more star number than this will be downloaded
     * save_thumbs: whether to download thumbnail and infomation
+    * save_dir: The folder you want to save the big images(default 'big'), in the dir you set in settings.py
 
-    Then big images will be downloaded into `the path you defined(default is the root path of project)/origin/big`
+    Then big images will be downloaded into `the path you defined(default is the root path of project)/origin/${save_dir}`
     Images is named in this format: `star_illustrateID_pagenumber.extension`
 
 3. If you have saved thumbnails, you can generate a preview page in order of star by call:

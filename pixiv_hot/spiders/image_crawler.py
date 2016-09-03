@@ -1,4 +1,5 @@
-# coding= utf-8
+# -*- coding: utf-8 -*-
+
 import json
 import re
 
@@ -42,17 +43,22 @@ class ImageCrawler(scrapy.Spider):
 
     save_thumbs = True
 
-    def __init__(self, keyword=u'战舰少女', max_page=0, save_star=500, save_thumbs=True, *args, **kwargs):
+    img_save_dir = u'big'
+
+    def __init__(self, keyword=u'战舰少女', max_page=0, save_star=500, save_thumbs=True, save_dir=u'big', *args, **kwargs):
         super(ImageCrawler, self).__init__(*args, **kwargs)
         settings = get_project_settings()
         
         self.pixiv_id = settings['PIXIV_ID']
         self.pixiv_pass = settings['PIXIV_PASS']
         self.max_page = int(max_page)
+        print keyword
         if platform.system() == 'Windows':
             self.keyword = keyword.decode('gbk').replace('##', ' ')
+            self.img_save_dir = save_dir.decode('gbk')
         else:
-            self.keyword = keyword.decode('utf-8').replace('##', ' ')
+            self.keyword = keyword.replace('##', ' ')
+            self.img_save_dir = save_dir
         self.save_star = int(save_star)
         self.save_thumbs = save_thumbs == 'True' or save_thumbs == True
         print self.keyword, self.max_page, self.save_star, self.save_thumbs
@@ -172,6 +178,7 @@ class ImageCrawler(scrapy.Spider):
             item['refer'] = response.url
             item['page'] = 0
             item['image_urls'] = [src, ]
+            item['img_save_dir'] = self.img_save_dir
             yield item
         else:
             print 'error'
@@ -185,9 +192,10 @@ class ImageCrawler(scrapy.Spider):
                 item = BigImage()
                 item['star'] = response.meta['star']
                 item['id'] = response.meta['id']
-                item['refer'] = response.url
+                item['refer'] = 'http://www.pixiv.net/member_illust.php?mode=manga_big&illust_id=%s&page=%d' % (response.meta['id'], page)
                 item['page'] = page
-                item['image_urls'] = [image, ]
+                item['image_urls'] = [image.replace('c/1200x1200/img-master', 'img-original').replace('_master1200', ''), ]
+                item['img_save_dir'] = self.img_save_dir
                 yield item
                 page += 1
         else:

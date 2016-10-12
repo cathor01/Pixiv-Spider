@@ -21,11 +21,13 @@
 
 2. Run scrapy with params:
     
-    `scrapy crawl pixiv -a keyword=战舰少女 -a max_page=200 -a save_star=400 -a save_thumbs=False -a save_dir=kenR`
+    `scrapy crawl pixiv -a keyword="战舰少女" -a oneof=Z1##Z16##Z31 -a exclude=空想##沃克兰 -save_thumbs=False -a save_star=200 -a save_dir=destroyer`
     
     ### Explain:
 
     * keyword: The tag you want to search, if you want to use several tags, please use ***##*** to connect them, like `女の子##花`
+    * oneof: Search for pics containing one of these tags(Optional)
+    * exclude: Search for pics containing none of these tags(Optional)
     * max_page: how many pages the spider will crwal
     * save_star: image with more star number than this will be downloaded
     * save_thumbs: whether to download thumbnail and infomation

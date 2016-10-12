@@ -45,7 +45,7 @@ class ImageCrawler(scrapy.Spider):
 
     img_save_dir = u'big'
 
-    def __init__(self, keyword=u'战舰少女', max_page=0, save_star=500, save_thumbs=True, save_dir=u'big', *args, **kwargs):
+    def __init__(self, keyword, oneof=u'', exclude=u'', max_page=0, save_star=500, save_thumbs=True, save_dir=u'big', *args, **kwargs):
         super(ImageCrawler, self).__init__(*args, **kwargs)
         settings = get_project_settings()
         
@@ -55,9 +55,21 @@ class ImageCrawler(scrapy.Spider):
         print keyword
         if platform.system() == 'Windows':
             self.keyword = keyword.decode('gbk').replace('##', ' ')
+            if oneof is not None and oneof != u'':
+                self.keyword += u' (' + oneof.decode('gbk').replace('##', ' OR ') + u')'
+            if exclude is not None and exclude != u'':
+                excludes = exclude.split('##')
+                for excl in excludes:
+                    self.keyword += u' -' + excl.decode('gbk')
             self.img_save_dir = save_dir.decode('gbk')
         else:
             self.keyword = keyword.replace('##', ' ')
+            if oneof is not None and oneof != u'':
+                self.keyword += u' (' + oneof.replace('##', ' OR ') + u')'
+            if exclude is not None and exclude != u'':
+                excludes = exclude.split('##')
+                for excl in excludes:
+                    self.keyword += u' -' + excl
             self.img_save_dir = save_dir
         self.save_star = int(save_star)
         self.save_thumbs = save_thumbs == 'True' or save_thumbs == True
